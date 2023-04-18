@@ -84,8 +84,10 @@ public class BatchConfiguration {
 				"    and cliente.CLIE_CLASIF_4 = usu.CLC4_CLASIF_4 "+
 				"    and cliente.CLIE_ACTIVIDAD_CLI = ca.ACLI_ACTIVIDAD_CLI " ;
 		
-		//System.out.println(clientID);
-
+		if (environment.containsProperty("client")) {
+			System.out.println("Procesando client-->" + environment.getProperty("client"));
+			sql = sql + " and cliente.CLIE_CLIENTE = " +  environment.getProperty("client");  
+		}
 		
 		reader.setSql(sql);
 		reader.setRowMapper(new ClientePlataformaRowMapper());

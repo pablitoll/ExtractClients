@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  crm:
+    image: 'crm-db:01'
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: mysecretpassword
+    volumes:
+      - 'c:/temp/crm-data2:/var/lib/mysql'
+      - 'c:/temp/init-crm-ddl.sql:/docker-entrypoint-initdb.d/init.sql'
+    ports:
+      - '3306:3306'
+    privileged: true
+    command: '--require_secure_transport=OFF'
+  plataforma:
+    image: 'plata-db:01'
+    restart: always
+    environment:
+      SA_PASSWORD: MyPassword123
+      ACCEPT_EULA: 'Y'
+    volumes:
+      - 'c:/temp/crm/mssql/data:/var/opt/mssql/data'
+      - 'c:/temp/crm/backups:/var/backups'
+      - './init-plata-ddl.sql:/docker-entrypoint-initdb.d/init.sql'
+    ports:
+      - '1433:1433'
+    privileged: true
+
+
